@@ -2,4 +2,4 @@
 
 Old versions: https://github.com/vjudge1/LilyWhiteBot/tree/master
 
-## NO GUARANTEES
+## NO GUARANTEES. YOU'VE BEEN WARNED!
