@@ -1,7 +1,5 @@
-# THIS PROJECT IS NO LONGER MAINTAINED
+# 警告：本程序已无法正常使用！
 
-Old versions: https://github.com/vjudge1/LilyWhiteBot/tree/master
+旧版本（无法运行，仅供参考）: https://github.com/vjudge1/LilyWhiteBot/tree/master
 
-Another version: https://github.com/jqqqqqqqqqq/coolq-telegram-bot
-
-## NO GUARANTEES. YOU'VE BEEN WARNED!
+一个基于Python的可用版本：https://github.com/jqqqqqqqqqq/coolq-telegram-bot
