@@ -1,10 +1,7 @@
 /*
-* 小冰
+* qqcommand
 *
-* command: '!bing'
-* types: {
-*     'qq/123456': 'xiaoice'
-* }
+* 設想中的 qqcommand
 */
 
 'use strict';
@@ -19,7 +16,7 @@ module.exports = (pluginManager, options) => {
     }
 
     let qqHandler = pluginManager.handlers.get('QQ');
-    let command = options.command || '!bing';
+    let command = options.command || '!qqcommand';
     let types = {};
 
     for (let t in (options.types || {})) {
@@ -35,11 +32,11 @@ module.exports = (pluginManager, options) => {
                 let client = BridgeMsg.parseUID(c);
                 let qq = null;
                 if (client.client === 'QQ') {
-                    if (types[client.uid] === 'xiaobing' || types[client.uid] === 'xiaoice') {
-                        qq = '2854196306';
+                    if (types[client.uid] === 'qc') {
+                        qq = '';
                     }
                     if (qq) {
-                        qqHandler.say(client.id, `[CQ:at,qq=${qq}] ${qqHandler.escape(context.param)}`, {
+                        qqHandler.say(client.id, `${qqHandler.escape(context.param)}`, {
                             noEscape: true,
                         });
                     }

@@ -21,11 +21,13 @@ const parseForwardBot = (username, text) => {
     if (symbol === 'self') {
         // TODO 更換匹配方式
         // [, , realNick, realText] = text.match(/^(|<.> )\[(.*?)\] ([^]*)$/m) || [];
-        [, realNick, realText] = text.match(/^\[(.*?)\] ([^]*)$/m) || [];
+        [, realNick, realText] = text.match(/^\[(.*?)\]\n([^]*)$/m) || [];
     } else if (symbol === '[]') {
         [, realNick, realText] = text.match(/^\[(.*?)\]:? ([^]*)$/m) || [];
     } else if (symbol === '<>') {
         [, realNick, realText] = text.match(/^<(.*?)>:? ([^]*)$/m) || [];
+    } else if (symbol === 'skt') {
+        [, realNick, realText] = text.match(/^\[(.*?)\]:?\n([^]*)$/m) || [];
     }
 
     return {realNick, realText};
@@ -148,11 +150,7 @@ const init = (b, h, c) => {
 // 收到了來自其他群組的訊息
 const receive = (msg) => new Promise((resolve, reject) => {
     if (msg.isNotice) {
-        if (msg.extra.clients >= 3) {
             tgHandler.sayWithHTML(msg.to, `<pre>&lt; ${msg.extra.clientName.fullname}: ${htmlEscape(msg.text)} &gt;</pre>`);
-        } else {
-            tgHandler.sayWithHTML(msg.to, `<pre>&lt; ${htmlEscape(msg.text)} &gt;</pre>`);
-        }
     } else {
         let output = '';
         let prefix = '';
@@ -162,11 +160,7 @@ const receive = (msg) => new Promise((resolve, reject) => {
             if (msg.extra.isAction) {
                 prefix = `* <b>${htmlEscape(msg.nick)}</b> `;
             } else {
-                if (msg.extra.clients >= 3) {
-                    prefix = `[${htmlEscape(msg.extra.clientName.shortname)} - <b>${htmlEscape(msg.nick)}</b>] `;
-                } else {
-                    prefix = `[<b>${htmlEscape(msg.nick)}</b>] `;
-                }
+                    prefix = `[${htmlEscape(msg.extra.clientName.shortname)} - <b>${htmlEscape(msg.nick)}</b>]\n`;
             }
         }
         output = `${prefix}${htmlEscape(msg.text)}`;

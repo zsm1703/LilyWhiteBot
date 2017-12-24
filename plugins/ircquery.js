@@ -98,12 +98,6 @@ module.exports = (pluginManager, options) => {
         return;
     }
 
-    if (!options.disallowedClients) {
-        options.disallowedClients = ['IRC'];
-    } else {
-        options.disallowedClients.push('IRC');
-    }
-
     let prefix = options.prefix || '';
     ircHandler = pluginManager.handlers.get('IRC');
 

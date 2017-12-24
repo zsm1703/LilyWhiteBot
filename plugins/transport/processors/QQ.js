@@ -164,11 +164,7 @@ const init = (b, h, c) => {
 // 收到了來自其他群組的訊息
 const receive = (msg) => new Promise((resolve, reject) => {
     if (msg.isNotice) {
-        if (msg.extra.clients >= 3) {
             qqHandler.say(msg.to, `< ${msg.extra.clientName.fullname}: ${msg.text} >`);
-        } else {
-            qqHandler.say(msg.to, `< ${msg.text} >`);
-        }
     } else {
         if (msg.extra.isAction) {
             // 一定是 IRC
@@ -180,7 +176,7 @@ const receive = (msg) => new Promise((resolve, reject) => {
             if (!config.options.hidenick) {
                 if (msg.extra.reply) {
                     const reply = msg.extra.reply;
-                    special = `Re ${reply.nick} `;
+                    special = `Re ${reply.nick}\n`;
 
                     if (reply.isText) {
                         special += `「${truncate(reply.message)}」`;
@@ -190,14 +186,10 @@ const receive = (msg) => new Promise((resolve, reject) => {
 
                     special += ': ';
                 } else if (msg.extra.forward) {
-                    special = `Fwd ${msg.extra.forward.nick}: `;
+                    special = `Fwd ${msg.extra.forward.nick}:\n`;
                 }
 
-                if (msg.extra.clients >= 3) {
-                    prefix = `[${msg.extra.clientName.shortname} - ${msg.nick}] ${special}`;
-                } else {
-                    prefix = `[${msg.nick}] ${special}`;
-                }
+                    prefix = `[${msg.extra.clientName.shortname} - ${msg.nick}]\n${special}`;
             }
 
             // 檔案
