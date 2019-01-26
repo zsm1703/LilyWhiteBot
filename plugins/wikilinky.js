@@ -6,9 +6,9 @@
     plugins 中加入一個「wikilinky」，然後在末尾補一個：
 
     "wikilinky": {
-        "groups": [
+        "groups": {
             "qq/123123123": "https://zh.wikipedia.org/wiki/$1"
-        ]
+        }
     }
  */
 'use strict';
@@ -117,15 +117,14 @@ module.exports = (pluginManager, options) => {
         map[type] = {};
     }
 
-    let groups = options.groups || [];
-    let groupsOther = [];
+    let groups = options.groups || {};
+    let groupsOther = {};
     for (let group in groups) {
         for (let other in bridge.map[group]) {
             groupsOther[other] = groups[group];
         }
     }
-    groups.push(...groupsOther);
-    groups = [...new Set(groups)];
+    Object.assign(groups, groupsOther);
     for (let group in groups) {
         let client = BridgeMsg.parseUID(group);
         if (client.uid) {
