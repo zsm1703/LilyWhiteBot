@@ -7,9 +7,7 @@
 
     "wikilinky": {
         "groups": [
-            {
-                "qq/123123123": "https://zh.wikipedia.org/wiki/$1"
-            }
+            "qq/123123123": "https://zh.wikipedia.org/wiki/$1"
         ]
     }
  */
@@ -119,7 +117,7 @@ module.exports = (pluginManager, options) => {
         map[type] = {};
     }
 
-    let groups = options.groups || {};
+    let groups = options.groups || [];
     let groupsOther = [];
     for (let group in groups) {
         for (let other in bridge.map[group]) {
