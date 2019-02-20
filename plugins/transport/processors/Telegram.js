@@ -150,7 +150,7 @@ const init = (b, h, c) => {
 // 收到了來自其他群組的訊息
 const receive = (msg) => new Promise((resolve, reject) => {
     if (msg.isNotice) {
-            tgHandler.sayWithHTML(msg.to, `<pre>&lt; ${msg.extra.clientName.fullname}: ${htmlEscape(msg.text)} &gt;</pre>`);
+        tgHandler.sayWithHTML(msg.to, `<pre>&lt; ${msg.extra.clientName.fullname}: ${htmlEscape(msg.text)} &gt;</pre>`);
     } else {
         let output = '';
         let prefix = '';

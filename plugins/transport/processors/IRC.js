@@ -208,7 +208,7 @@ const receive = (msg) => new Promise((resolve, reject) => {
 
     if (msg.isNotice) {
         let tmp2;
-            tmp2 = `< ${msg.extra.clientName.fullname}: ${msg.text} >`;
+        tmp2 = `< ${msg.extra.clientName.fullname}: ${msg.text} >`;
         if (colorize.enabled && colorize.broadcast) {
             tmp2 = color[colorize.broadcast](tmp2);
         }
@@ -219,12 +219,12 @@ const receive = (msg) => new Promise((resolve, reject) => {
 
         if (!config.options.hidenick) {
             output.push('[');
-                tmp = `${msg.extra.clientName.shortname}`;
-                if (colorize.enabled && colorize.client) {
-                    tmp = color[colorize.client](tmp);
-                }
-                output.push(tmp);
-                output.push(' - ');
+            tmp = `${msg.extra.clientName.shortname}`;
+            if (colorize.enabled && colorize.client) {
+                tmp = color[colorize.client](tmp);
+            }
+            output.push(tmp);
+            output.push(' - ');
 
             tmp = msg.nick;
             if (colorize.enabled && colorize.nick && tmp.length > 0) {

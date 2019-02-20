@@ -164,7 +164,7 @@ const init = (b, h, c) => {
 // 收到了來自其他群組的訊息
 const receive = (msg) => new Promise((resolve, reject) => {
     if (msg.isNotice) {
-            qqHandler.say(msg.to, `< ${msg.extra.clientName.fullname}: ${msg.text} >`);
+        qqHandler.say(msg.to, `< ${msg.extra.clientName.fullname}: ${msg.text} >`);
     } else {
         if (msg.extra.isAction) {
             // 一定是 IRC
@@ -189,7 +189,7 @@ const receive = (msg) => new Promise((resolve, reject) => {
                     special = `Fwd ${msg.extra.forward.nick}:\n`;
                 }
 
-                    prefix = `[${msg.extra.clientName.shortname} - ${msg.nick}]\n${special}`;
+                prefix = `[${msg.extra.clientName.shortname} - ${msg.nick}]\n${special}`;
             }
 
             // 檔案
