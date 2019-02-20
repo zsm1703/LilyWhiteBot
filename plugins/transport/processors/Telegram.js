@@ -20,14 +20,12 @@ const parseForwardBot = (username, text) => {
     let symbol = forwardBots[username];
     if (symbol === 'self') {
         // TODO 更換匹配方式
-        // [, , realNick, realText] = text.match(/^(|<.> )\[(.*?)\] ([^]*)$/mu) || [];
+        // [, , realNick, realText] = text.match(/^(|<.> )\[(.*?)\]\n([^]*)$/mu) || [];
         [, realNick, realText] = text.match(/^\[(.*?)\]\n([^]*)$/mu) || [];
     } else if (symbol === '[]') {
-        [, realNick, realText] = text.match(/^\[(.*?)\]:? ([^]*)$/mu) || [];
+        [, realNick, , realText] = text.match(/^\[(.*?)\](:? |\n)([^]*)$/mu) || [];
     } else if (symbol === '<>') {
-        [, realNick, realText] = text.match(/^<(.*?)>:? ([^]*)$/mu) || [];
-    } else if (symbol === 'skt') {
-        [, realNick, realText] = text.match(/^\[(.*?)\]:?\n([^]*)$/mu) || [];
+        [, realNick, , realText] = text.match(/^<(.*?)>(:? |\n)([^]*)$/mu) || [];
     }
 
     return {realNick, realText};
