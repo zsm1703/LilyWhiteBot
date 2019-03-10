@@ -2,9 +2,9 @@
 * 小冰
 *
 * command: '!bing'
-* types: {
-*     'qq/123456': 'xiaoice'
-* }
+* types: [
+*     'qq/123456'
+* ]
 */
 
 'use strict';
@@ -20,12 +20,12 @@ module.exports = (pluginManager, options) => {
 
     let qqHandler = pluginManager.handlers.get('QQ');
     let command = options.command || '!bing';
-    let types = {};
+    let types = [];
 
-    for (let t in (options.types || {})) {
+    for (let t of (options.types || [])) {
         let client = BridgeMsg.parseUID(t);
         if (client.uid) {
-            types[client.uid] = options.types[t].toLowerCase();
+            types.push(client.uid);
         }
     }
 
@@ -33,13 +33,9 @@ module.exports = (pluginManager, options) => {
         if (!context.isPrivate) {
             for (let c of context.extra.mapto) {
                 let client = BridgeMsg.parseUID(c);
-                let qq = null;
                 if (client.client === 'QQ') {
-                    if (types[client.uid] === 'xiaobing' || types[client.uid] === 'xiaoice') {
-                        qq = '2854196306';
-                    }
-                    if (qq) {
-                        qqHandler.say(client.id, `[CQ:at,qq=${qq}] ${qqHandler.escape(context.param)}`, {
+                    if (types.indexOf(client.uid) > -1) {
+                        qqHandler.say(client.id, `[CQ:at,qq=2854196306] ${qqHandler.escape(context.param)}`, {
                             noEscape: true,
                         });
                     }
