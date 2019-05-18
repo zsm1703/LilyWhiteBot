@@ -61,12 +61,12 @@ const receive = (msg) => new Promise((resolve, reject) => {
                         special += reply.message;
                     }
 
-                    special += ': ';
+                    special += ':\n';
                 } else if (msg.extra.forward) {
-                    special = `Fwd ${msg.extra.forward.nick}: `;
+                    special = `Fwd ${msg.extra.forward.nick}:\n`;
                 }
 
-                prefix = `[${msg.extra.clientName.shortname} - ${msg.nick}] ${special}`;
+                prefix = `[${msg.extra.clientName.shortname} - ${msg.nick}]\n${special}`;
             }
 
             // 檔案
