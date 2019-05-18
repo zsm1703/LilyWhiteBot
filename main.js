@@ -8,10 +8,11 @@
 'use strict';
 
 const https = require('https');
-const irc = require('funsocietyirc-client');
+const irc = require('irc-upd');
 const Telegraf = require('telegraf');
 const QQBot = require('./lib/QQBot.js');
 const WeChatBot = require('./lib/WeChatBotClient.js');
+const discord = require('discord.js');
 const proxy = require('./lib/proxy.js');
 
 const {Context, Message} = require('./lib/handlers/Context.js');
@@ -19,6 +20,7 @@ const IRCMessageHandler = require('./lib/handlers/IRCMessageHandler.js');
 const TelegramMessageHandler = require('./lib/handlers/TelegramMessageHandler.js');
 const QQMessageHandler = require('./lib/handlers/QQMessageHandler.js');
 const WeChatMessageHandler = require('./lib/handlers/WeChatMessageHandler.js');
+const DiscordMessageHandler = require('./lib/handlers/DiscordMessageHandler.js');
 
 // 所有擴充套件包括傳話機器人都只與該物件打交道
 const pluginManager = {
@@ -113,8 +115,8 @@ if (config.Telegram && !config.Telegram.disabled) {
     // 代理
     let myAgent = https.globalAgent;
 
-    if (!(tgcfg.options.checkCertificate === undefined ? true : tgcfg.options.checkCertificate)) {
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"; // 禁用 TLS 證書驗證
+    if (tgcfg.options.noCheckCertificate) {
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     }
 
     if (tgcfg.options.proxy && tgcfg.options.proxy.host) {
@@ -239,6 +241,35 @@ if (config.WeChat && !config.WeChat.disabled) {
     });
 
     pluginManager.log('WeChatBot started');
+}
+
+if (config.Discord && !config.Discord.disabled) {
+    let botcfg = config.Discord.bot;
+
+    pluginManager.log('Starting DiscordBot...');
+    const discordClient = new discord.Client();
+
+    discordClient.on('ready', (message) => {
+        pluginManager.log('DiscordBot is ready.');
+    });
+
+    discordClient.on('error', (message) => {
+        pluginManager.log(`DiscordBot Error: ${message.message}`, true);
+    });
+
+    discordClient.login(botcfg.token);
+
+    let options = config.Discord.options || {};
+    let options2 = {
+        nickStyle: options.nickStyle,
+    };
+
+    const discordHandler = new DiscordMessageHandler(discordClient);
+    pluginManager.handlers.set('Discord', discordHandler);
+    pluginManager.handlerClasses.set('Discord', {
+        object: DiscordMessageHandler,
+        options: options2,
+    });
 }
 
 /**
