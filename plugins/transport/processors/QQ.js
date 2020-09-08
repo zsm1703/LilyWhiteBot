@@ -182,10 +182,11 @@ const receive = (msg) => new Promise((resolve, reject) => {
             if (!config.options.hidenick) {
                 if (msg.extra.reply) {
                     const reply = msg.extra.reply;
-                    special = `Re ${reply.nick} `;
+                    special = `回復 ${reply.nick} `;
 
                     if (reply.isText) {
-                        special += `「${truncate(reply.message)}」`;
+                        //special += `「${truncate(reply.message)}」`;
+                        special += `「${(reply.message)}」`;
                     } else {
                         special += reply.message;
                     }
@@ -196,9 +197,11 @@ const receive = (msg) => new Promise((resolve, reject) => {
                 }
 
                 if (msg.extra.clients >= 3) {
-                    prefix = `[${msg.extra.clientName.shortname} - ${msg.nick}] ${special}`;
+                    //prefix = `[${msg.extra.clientName.shortname} - ${msg.nick}] ${special}`;
+                    prefix = `${special}`;
                 } else {
-                    prefix = `[${msg.nick}] ${special}`;
+                    prefix = `${special}`;
+                    //prefix = `[${msg.nick}] ${special}`;
                 }
             }
 
